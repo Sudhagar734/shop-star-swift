@@ -1,66 +1,92 @@
-import { Search, ShoppingCart, User, Menu, Heart } from "lucide-react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Palette, Menu, X, Github, Twitter } from "lucide-react";
 
 const Header = () => {
-  return (
-    <header className="bg-card shadow-md sticky top-0 z-50">
-      <div className="container mx-auto px-4 py-3">
-        <div className="flex items-center justify-between">
-          {/* Logo */}
-          <div className="flex items-center space-x-4">
-            <Button variant="ghost" size="sm" className="md:hidden">
-              <Menu className="w-5 h-5" />
-            </Button>
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-              FlipMart
-            </h1>
-          </div>
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-          {/* Search Bar */}
-          <div className="hidden md:flex flex-1 max-w-xl mx-8">
-            <div className="relative w-full">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
-              <Input
-                placeholder="Search for products, brands and more"
-                className="pl-10 pr-4 py-2 border-border focus:ring-primary"
-              />
+  return (
+    <header className="sticky top-0 z-40 w-full border-b border-border/40 bg-background/80 backdrop-blur-xl">
+      <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+        {/* Logo */}
+        <div className="flex items-center gap-3">
+          <div className="p-2 bg-gradient-primary rounded-xl shadow-glow">
+            <Palette className="w-6 h-6 text-primary-foreground" />
+          </div>
+          <div>
+            <h1 className="text-xl font-bold bg-gradient-primary bg-clip-text text-transparent">
+              DreamArt
+            </h1>
+            <p className="text-xs text-muted-foreground leading-none">
+              AI Art Generator
+            </p>
+          </div>
+        </div>
+
+        {/* Desktop Navigation */}
+        <nav className="hidden md:flex items-center gap-6">
+          <a href="#gallery" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            Gallery
+          </a>
+          <a href="#about" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            About
+          </a>
+          <a href="#contact" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            Contact
+          </a>
+        </nav>
+
+        {/* Desktop Actions */}
+        <div className="hidden md:flex items-center gap-3">
+          <Button variant="ghost" size="sm">
+            <Github className="w-4 h-4" />
+          </Button>
+          <Button variant="ghost" size="sm">
+            <Twitter className="w-4 h-4" />
+          </Button>
+          <Button size="sm" className="bg-gradient-primary">
+            Get Started
+          </Button>
+        </div>
+
+        {/* Mobile Menu Button */}
+        <Button
+          variant="ghost"
+          size="sm"
+          className="md:hidden"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+        >
+          {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+        </Button>
+      </div>
+
+      {/* Mobile Menu */}
+      {isMenuOpen && (
+        <div className="md:hidden bg-background/95 backdrop-blur-xl border-t border-border/40">
+          <div className="container mx-auto px-4 py-4 space-y-3">
+            <a href="#gallery" className="block text-sm text-muted-foreground hover:text-foreground transition-colors">
+              Gallery
+            </a>
+            <a href="#about" className="block text-sm text-muted-foreground hover:text-foreground transition-colors">
+              About
+            </a>
+            <a href="#contact" className="block text-sm text-muted-foreground hover:text-foreground transition-colors">
+              Contact
+            </a>
+            <div className="flex gap-2 pt-2">
+              <Button variant="ghost" size="sm">
+                <Github className="w-4 h-4" />
+              </Button>
+              <Button variant="ghost" size="sm">
+                <Twitter className="w-4 h-4" />
+              </Button>
+              <Button size="sm" className="bg-gradient-primary flex-1">
+                Get Started
+              </Button>
             </div>
           </div>
-
-          {/* Navigation */}
-          <div className="flex items-center space-x-2">
-            <Button variant="ghost" size="sm" className="hidden md:flex items-center space-x-1">
-              <User className="w-4 h-4" />
-              <span>Login</span>
-            </Button>
-            
-            <Button variant="ghost" size="sm" className="relative">
-              <Heart className="w-5 h-5" />
-              <span className="hidden md:inline ml-1">Wishlist</span>
-            </Button>
-            
-            <Button variant="ghost" size="sm" className="relative">
-              <ShoppingCart className="w-5 h-5" />
-              <span className="hidden md:inline ml-1">Cart</span>
-              <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                3
-              </span>
-            </Button>
-          </div>
         </div>
-
-        {/* Mobile Search */}
-        <div className="md:hidden mt-3">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
-            <Input
-              placeholder="Search products..."
-              className="pl-10 pr-4 py-2"
-            />
-          </div>
-        </div>
-      </div>
+      )}
     </header>
   );
 };
